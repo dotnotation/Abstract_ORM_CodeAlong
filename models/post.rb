@@ -23,7 +23,11 @@ class Post
         SQL
 
         row = DB[:conn].execute(sql, id)
-        self.reify_from_row(row.first)
+        if rows.first
+            self.reify_from_row(row.first)
+        else
+            nil
+        end
     end
 
     def self.reify_from_row(row)
