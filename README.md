@@ -1,1 +1,2 @@
 # Abstract_ORM_CodeAlong
+A code along with Avi from Flatiron School. I couldn't find his code so decided to just type it out for myself and play around with it. This isn't offical, nor is it my work. Please follow the normal code of conduct. 
