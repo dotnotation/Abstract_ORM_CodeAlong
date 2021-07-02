@@ -1,7 +1,27 @@
 module Persistable
     module ClassMethods
+
+        def self.extended(base) #hook, lifecycle, callback
+            puts "#{base} has been extended by #{self}"
+            base.attributes.keys.each do |attribute_name|
+                attr_accessor attribute_name
+            end
+        end
+
+        def attributes
+            self::ATTRIBUTES
+        end
+
         def table_name
             "#{self.to_s.downcase}s"
+        end
+
+        def create(attribute_hash)
+            self.new.tap do |p|
+                attributes_hash.each do |attribute_name, attribute_value|
+                    p.send("#{attribute_name}=", attribute_value)
+                end
+                p.save
         end
     
         def find(id)
@@ -63,6 +83,11 @@ module Persistable
     end
 
     module InstanceMethods
+
+        def self.included(base) #hook, lifecycle, callback
+            puts "#{base} has mixed in #{self}"
+        end
+
         def destroy
             sql = <<-SQL
                 DELETE FROM #{self.class.table_name} WHERE id = ?

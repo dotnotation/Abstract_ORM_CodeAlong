@@ -8,13 +8,13 @@ class NewAuthor
         :age => "INTEGER"
     }
 
-    ATTRIBUTES.keys.each do |attribute_name|
-        attr_accessor attribute_name
-    end
+    # ATTRIBUTES.keys.each do |attribute_name|
+    #     attr_accessor attribute_name
+    # end
 
-    def self.attributes
-        ATTRIBUTES
-    end
+    # def self.attributes
+    #     ATTRIBUTES
+    # end
 
     include Persistable::InstanceMethods
     extend Persistable::ClassMethods
