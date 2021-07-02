@@ -1,4 +1,5 @@
 class NewAuthor
+    #now classes are only responsible for their own attributes and readers
     ATTRIBUTES = {
         :id => "INTEGER PRIMARY KEY",
         :name => "TEXT",
@@ -7,8 +8,8 @@ class NewAuthor
         :age => "INTEGER"
     }
 
-    ATTRIBUTES.keys.each do |key|
-        attr_accessor key
+    ATTRIBUTES.keys.each do |attribute_name|
+        attr_accessor attribute_name
     end
 
     def self.attributes

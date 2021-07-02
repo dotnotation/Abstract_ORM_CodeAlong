@@ -19,7 +19,7 @@ module Persistable
 
         def self.reify_from_row(row)
             self.new.tap do |p| #returns the instance
-                ATTRIBUTES.key.each.with_index do |attribute_name, i|
+                self.attributes.key.each.with_index do |attribute_name, i|
                     p.send("#{attribute_name}=", row[i])
                 end
                 #taking each instance, and assigning each attribute to that instance
@@ -31,7 +31,7 @@ module Persistable
         end
     
         def create_sql
-            ATTRIBUTES.collect{|attribute_name, schema| "#{attribute_name} #{schema}"}.join(",")
+            self.attributes.collect{|attribute_name, schema| "#{attribute_name} #{schema}"}.join(",")
         end
     
         def create_table
@@ -46,17 +46,17 @@ module Persistable
         end
 
         def attribute_names_for_insert
-            ATTRIBUTES.keys[1..-1].join(",") 
+            self.attributes.keys[1..-1].join(",") 
             #"title, content" basically every key from the ATTRIBUTES hash except id, and joined with a comma 
         end
     
         def question_marks_for_insert
-            (ATTRIBUTES.keys.size-1).times.collect{"?"}.join(",")
+            (self.attributes.keys.size-1).times.collect{"?"}.join(",")
             #replacing the question marks for the VALUES insert again getting rid of id
         end
 
         def sql_for_update
-            ATTRIBUTES.keys[1..-1].collect{|attribute_name| "#{attribute_name} = ?"}.join(",")
+            self.attributes.keys[1..-1].collect{|attribute_name| "#{attribute_name} = ?"}.join(",")
             #replacing title = ?, content = ? in update
             #give all the keys except for id
         end
@@ -87,7 +87,7 @@ module Persistable
         end
 
         def attribute_values
-            ATTRIBUTES.key[1..-1].collect{|attribute_name| self.send(attribute_name)}
+            self.class.attributes.key[1..-1].collect{|attribute_name| self.send(attribute_name)}
             #want an array like ["Post Title", "Post Content", "Post Author"] and getting rid of id
         end
 

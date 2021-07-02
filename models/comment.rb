@@ -1,10 +1,8 @@
-class NewPost
+class Comment
     #now classes are only responsible for their own attributes and readers
     ATTRIBUTES = {
         :id => "INTEGER PRIMARY KEY",
-        :title => "TEXT",
         :content => "TEXT",
-        :author_name => "TEXT"
     }
 
     ATTRIBUTES.keys.each do |attribute_name|
